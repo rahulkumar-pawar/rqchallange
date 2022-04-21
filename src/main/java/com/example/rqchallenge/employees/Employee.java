@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
+@Jacksonized
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Employee {
 
@@ -19,7 +21,7 @@ public class Employee {
     @JsonProperty("employee_name")
     private String employeeName;
     @JsonProperty("employee_salary")
-    private String employeeSalary;
+    private Integer employeeSalary;
     @JsonProperty("employee_age")
     private String employeeAge;
     @JsonProperty("profile_image")

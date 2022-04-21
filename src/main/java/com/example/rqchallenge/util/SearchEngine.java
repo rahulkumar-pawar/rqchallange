@@ -15,4 +15,19 @@ public class SearchEngine {
                 .filter(item -> item.getEmployeeName().toLowerCase(Locale.ROOT).contains(filter.toLowerCase()))
                 .collect(Collectors.toList());
     }
+
+    public List<String> getTopRecordsBasedOnSalary(List<Employee> employees, int totalRecords){
+        return employees.stream()
+                .sorted((e1, e2)-> e2.getEmployeeSalary().compareTo(e1.getEmployeeSalary()))
+                .limit(totalRecords)
+                .map(e -> String.valueOf(e.getEmployeeName()))
+                .collect(Collectors.toList());
+    }
+
+    public Integer getHighestSalaryOfEmployees(List<Employee> employees) {
+        return employees.stream()
+                .sorted((e1, e2)-> e2.getEmployeeSalary().compareTo(e1.getEmployeeSalary()))
+                .limit(1)
+                .collect(Collectors.toList()).get(0).getEmployeeSalary();
+    }
 }
