@@ -1,3 +1,7 @@
+/*
+ * Employee Service is responsible for all Employee operations.
+ * It includes CRUD and some custom search
+ */
 package com.example.rqchallenge.employees;
 
 import com.example.rqchallenge.config.CommonConfig;
@@ -26,11 +30,18 @@ public class EmployeeService {
     @Autowired
     SearchEngine searchEngine;
 
+    /**
+     *
+     * @return List of employees
+     * @throws Exception in case any error in processing response
+     */
     public List<Employee> getAllEmployees() throws Exception {
         try {
+            log.debug("Retrieving all employee details");
             Optional<String> response =  client.getResponseFromDummyAPI(
                     String.format("%s%s/%ss",config.getBaseUrl(),config.getApiVersion(),config.getEntity()),
                     Constants.HttpMethods.GET.toString(), Optional.empty());
+            log.debug("Retrieved all employee details");
             if(response.isPresent() && validateResponse(response.get())) {
                 JSONObject jsonObject = new JSONObject(response.get());
                 ObjectMapper mapper = new ObjectMapper();
@@ -44,11 +55,19 @@ public class EmployeeService {
         }
     }
 
+    /**
+     *
+     * @param searchString
+     * @return list of searched employees
+     * @throws Exception in case any error in processing response
+     */
     public List<Employee> getEmployeesByNameSearch(String searchString) throws Exception {
         try {
+            log.debug("Retrieving employees based on searchString - {}", searchString);
             Optional<String> response =  client.getResponseFromDummyAPI(
                     String.format("%s%s/%ss",config.getBaseUrl(),config.getApiVersion(),config.getEntity()),
                     Constants.HttpMethods.GET.toString(), Optional.empty());
+            log.debug("Retrieved search result of employee details");
             if(response.isPresent()) {
                 return searchEngine.searchByName(processResponse(response.get()), searchString);
             }else{
@@ -60,11 +79,19 @@ public class EmployeeService {
         }
     }
 
+    /**
+     *
+     * @param id Employee ID
+     * @return Employee details
+     * @throws Exception in case not found or error in processing response
+     */
     public Employee getEmployeeById(String id) throws Exception {
         try {
+            log.debug("Getting employee based on ID:{}", id);
             Optional<String> response =  client.getResponseFromDummyAPI(
                     String.format("%s%s/%s/%s",config.getBaseUrl(),config.getApiVersion(),config.getEntity(),id),
                     Constants.HttpMethods.GET.toString(), Optional.empty());
+            log.debug("Retrieved employee details ID:{}",id);
             return getEmployee(response);
         } catch (Exception e) {
             log.error("Error occurred while retrieving the employee details ", e);
@@ -72,11 +99,18 @@ public class EmployeeService {
         }
     }
 
+    /**
+     *
+     * @return Get the highest salary of employee
+     * @throws Exception in case any error in processing response
+     */
     public Integer getHighestSalaryOfEmployees() throws Exception {
         try {
+            log.debug("Getting highest salary");
             Optional<String> response =  client.getResponseFromDummyAPI(
                     String.format("%s%s/%ss",config.getBaseUrl(),config.getApiVersion(),config.getEntity()),
                     Constants.HttpMethods.GET.toString(), Optional.empty());
+            log.debug("Retrieved highest salary");
             if(response.isPresent()) {
                 return searchEngine.getHighestSalaryOfEmployees(processResponse(response.get()));
             }else{
@@ -88,11 +122,18 @@ public class EmployeeService {
         }
     }
 
+    /**
+     *
+     * @return List of top ten employees who is having the highest salary
+     * @throws Exception in case any error in processing response
+     */
     public List<String> getTopTenHighestEarningEmployeeNames() throws Exception {
         try {
+            log.debug("Getting top ten salaried employee");
             Optional<String> response =  client.getResponseFromDummyAPI(
                     String.format("%s%s/%ss",config.getBaseUrl(),config.getApiVersion(),config.getEntity()),
                     Constants.HttpMethods.GET.toString(), Optional.empty());
+            log.debug("retrieved top ten salaried employee");
             if(response.isPresent()) {
                 return searchEngine.getTopRecordsBasedOnSalary(processResponse(response.get()), Constants.TOP_RECORDS);
             }else{

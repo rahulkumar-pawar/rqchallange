@@ -1,3 +1,6 @@
+/*
+ * Combined lombok defined Employee entity for JSON and Java object.
+ */
 package com.example.rqchallenge.employees;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
-@Jacksonized
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Employee {
 

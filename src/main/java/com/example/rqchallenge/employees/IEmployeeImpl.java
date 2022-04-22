@@ -1,5 +1,9 @@
+/*
+ * Employee impl is an implementation of employee controller
+ */
 package com.example.rqchallenge.employees;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +15,12 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@Tag(name = "Employee", description = "RQ Challenge")
 public class IEmployeeImpl implements IEmployeeController{
 
     @Autowired
     EmployeeService employeeService;
+
 
     @Override
     public ResponseEntity<List<Employee>> getAllEmployees(){

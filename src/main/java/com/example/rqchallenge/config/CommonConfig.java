@@ -1,3 +1,6 @@
+/*
+ * Common config can be read from application.properties or application.yaml
+ */
 package com.example.rqchallenge.config;
 
 import lombok.Data;

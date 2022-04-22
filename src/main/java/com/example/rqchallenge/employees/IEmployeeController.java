@@ -1,3 +1,7 @@
+/*
+ * IEmployeeController is interface for REST endpoints.
+ * This provides employee operations over REST API.
+ */
 package com.example.rqchallenge.employees;
 
 import org.springframework.http.ResponseEntity;
